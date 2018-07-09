@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <title>Trig Map</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+       #map {
+	   position:absolute;
+        height: 700px;
+		margin-top: 0%;
+        width: 80%;
+       }
+	   body {position:relative; background-color:silver;}
+	   #control_panel {position: relative; margin-top:3%;}
+	   #outputs {position:absolute; width:20%; margin-left:80%;}
+	   .accordion {
+		background-color: #eee;
+		color: #444;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		border: none;
+		text-align: left;
+		outline: none;
+		font-size: 15px;
+		transition: 0.4s;
+		}
+
+		.active, .accordion:hover {
+		background-color: #ccc; 
+		}
+
+		.panels {
+		padding: 0 18px;
+		display: none;
+		background-color: white;
+		overflow: hidden;
+		}
+    </style>
+	
+  </head>
+  <body onload="initialize()">
+  <!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a style="color:white;background-color:gray;" href="../home.html#home" class="w3-bar-item w3-button">HOME</a>
+    <a style="color:white;background-color:gray;" href="../home.html#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
+    <a style="color:white;background-color:gray;"  href="../route_15104163d/eRouting_map.html" class="w3-bar-item w3-button"><i class="fa fa-map"></i>Route Map</a>
+	<a style="color:white;background-color:gray;"  href="../trig_15104163d/trigmap.html" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-flag-o"></i> Trig Map</a>
+    <a style="color:white;background-color:gray;"  href="../home.html#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+	<a style="color:white;background-color:gray;"  href="./readme.html" target="_blank" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-question-circle"></i> Help</a>
+	<img src="../img/smalllogo.png" alt="smalllogo" style="width: 160px; height:40px;float:right;"/>
+  </div>
+
+</div>
+
+  
+    <script>
+      function initMap() {
+		var directionsService = new google.maps.DirectionsService;
+		var directionsDisplay = new google.maps.DirectionsRenderer;
+        var hk = {lat: 22.38373, lng: 114.118423};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: hk
+        });
+        directionsDisplay.setMap(map);
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCFPM4Rh9lkOc8CwPkIB84KZn7J7L2KdM&callback=initMap">
+    </script>
+	<script type="text/javascript" src="./js/myposition.js"></script>
+    <script type="text/javascript" src="./js/mydistance.js"></script>
+	<script type="text/javascript" src="./js/myroute.js"></script>
+	
+	<div id="control_panel" style="border:5px solid white;border-radius:5px;color:#734d26;font-weight:bold;">
+	<div style="border:5px solid white;border-radius:2px;">
+	<input type="button" value="Get Current Location" onclick="getCurrentPosition()" style="border-radius:5px;background-color:#99ccff;color:white;"/>
+	<input type="text" value="Latitude" id="myLat" style="color:#734d26;"/>
+	<input type="text" value="Longitude" id="myLng" style="color:#734d26;"/>
+	<input type="button" value="Show Me on Map" onclick="getPosition()" style="border-radius:5px;background-color:#99ccff;color:white;"/>
+	</div><br/>
+	Number of Stations
+	<select id="stnNum">
+		<option value="1">1</option>
+		<option value="3">3</option>
+		<option value="5">5</option>
+		<option value="10">10</option>
+	</select>
+	<br/>
+	Travelling Mode
+	<input type="radio" name="travel" id="drive">Driving</input>
+	<input type="radio" name="travel" id="bike">Bicycling</input>
+	<input type="radio" name="travel" id="tran">Public Transit</input>
+	<input type="radio" name="travel" id="walk">Walking</input>
+	
+	<br/>
+	Find Nearest By
+	<input type="radio" name="sort" id="edist">Striaght Distance</input>
+	<input type="radio" name="sort" id="time">Travelling Time</input>
+	<input type="radio" name="sort" id="tdist">Actual Distance</input>
+	
+	<input type="button" id="calDistance" value="Show Stations" onClick="loadTrig()" style="border-radius:5px;background-color:#99ccff;color:white;"/>
+	<input class="button" type="button"  value="Display Route" onclick="calRoute(directionsService, directionsDisplay)" style="border-radius:5px;background-color:#99ccff;color:white;"/>
+	</div>
+	
+	<div id="main">
+	<div id="map"></div>
+	<div id="outputs" style="overflow:scroll;border:2px dashed white;">
+	<button class="accordion" id="stnTitle" style="border-radius:5px;background-color:#99ccff;color:white;">Stations-Click me</button>
+	<div class="panels">
+		<div id="outresult" style="overflow:scroll;">Station Detail</div>
+	</div>
+	
+	<button class="accordion" id="routeTitle" style="border-radius:5px;background-color:#99ccff;color:white;">Route-Click me</button>
+	<div class="panels">
+		<div id="panel" style="overflow:scroll;">Route Detail</div>
+	</div>
+	</div>
+	</div>
+	<script>
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+
+	for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+		});
+	}
+</script>
+	
+  </body>
+</html>
+
+

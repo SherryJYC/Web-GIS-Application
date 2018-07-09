@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>eRouting Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/mystyle.css">
+  </head>
+  <body>
+	 <!-- Navbar (sit on top) -->
+	<div class="w3-top">
+    <div class="w3-bar" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a style="color:white;background-color:gray;" href="../home.html" class="w3-bar-item w3-button">HOME</a>
+    <a style="color:white;background-color:gray;" href="../home.html#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
+    <a style="color:white;background-color:gray;"  href="../route_15104163d/eRouting_map.html" class="w3-bar-item w3-button"><i class="fa fa-map"></i>Route Map</a>
+	<a style="color:white;background-color:gray;"  href="../trig_15104163d/trigmap.html" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-flag-o"></i> Trig Map</a>
+    <a style="color:white;background-color:gray;"  href="../home.html#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+	<a style="color:white;background-color:gray;"  href="./readme.html" target="_blank" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-question-circle"></i> Help</a>
+	<img src="../img/smalllogo.png" alt="smalllogo" style="width: 160px; height:40px;float:right;"/>
+    </div>
+
+    </div>
+
+	<div id="main">
+	<div style="background-color:lightgray;color:#3399ff;font-weight:bold; border:5px solid white;">
+	Click to add Origin & Destination: <img src="./img/rsz_orig.png" style="height:30px;"/> 1st marker = origin & 
+									   <img src="./img/rsz_dest.png" style="height:25px;"/> 2nd marker = destination 
+	<input type="button" id="goRoute" onclick="route()" value="Show Route of Added Makers" style="color:white;background-color:#3399ff;border-radius:5px;"/>
+	<input type="button" id="setOrig" onclick="document.location.reload()" value="Click to RESET markers"  style="color:white;background-color:#3399ff;border-radius:5px;"/>
+	</div>
+	<div style="background-color:lightgray;color:#3399ff;font-weight:bold; border:5px solid white;">
+	<br/>Enter Address to find route: <input type="checkbox" style="margin-left:25%" id="toll" name="avoidtoll" onclick="setToll()">Lowest Toll 
+ 
+	<!--Category Search Box-->
+	<div class="tooltip controls" style="margin-left:90px;font-size:10px;text-align:center;">Category Key Words</br><i class="fa fa-arrow-up"></i>
+	<span class="tooltiptext">school</br>parking</br>hotel</br>cafe</br>petrol station</br></span>
+	</div>
+	<input id="pac-input" class="controls" type="text" placeholder="Category Search Box"></input>
+	
+	<!--end-->
+	
+	<input id="origin-input" class="controls" type="text"
+        placeholder="Enter an origin">
+
+    <input id="destination-input" class="controls" type="text"
+        placeholder="Enter a destination">
+
+    <div id="mode-selector" class="controls">
+      <input type="radio" name="type" id="changemode-walking" checked="checked" >
+      <label for="changemode-walking">Walking</label>
+
+      <input type="radio" name="type" id="changemode-transit">
+      <label for="changemode-transit">Transit</label>
+
+      <input type="radio" name="type" id="changemode-driving">
+      <label for="changemode-driving">Driving</label>
+    </div>
+	</div>
+	<div id="right-panel" style="border:2px dashed white;">
+	<h2 style="padding-left:30px;padding-right:30px;color:#3399ff;">Route Details</h2>
+	</div>
+    <div id="map"></div>
+	</div>
+    <script type="text/javascript" src="./js/eroute.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDId_O9AYjmYhyfHzlerwSr37kU9-7Zl_E&libraries=places&callback=initMap"
+        async defer></script>
+	
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
